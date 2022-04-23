@@ -1,16 +1,22 @@
 package com.fileidea.yakusoku
 
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.EditText
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.fileidea.myapplication.RegisterForm
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import io.opencensus.stats.View
 
+const val EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE"
 
 class MainActivity : AppCompatActivity() {
     private val mAuth = FirebaseAuth.getInstance();
+
     override fun onStart() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
@@ -44,7 +50,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
 
-    fun SignUpButtonEvent(view: android.view.View) {
 
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    fun SignUpButtonEvent(view: android.view.View) {
+            val intent = Intent(this, RegisterForm::class.java).apply {
+            }
+            startActivity(intent)
     }
 }
