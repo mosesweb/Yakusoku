@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "36533724269",
+    "project_id": "eurovision-9fe1d",
+    "storage_bucket": "eurovision-9fe1d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:36533724269:android:96a48c6ff416d132790b64",
+        "android_client_info": {
+          "package_name": "com.fileidea.yakusoku"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "36533724269-tjd3slnj63deh8a6etkn0k9u0o1q1dtn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfeYDNd8oZjNj2r_mCJT4cfVO3de03ZhM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "36533724269-tjd3slnj63deh8a6etkn0k9u0o1q1dtn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
