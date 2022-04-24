@@ -1,16 +1,17 @@
 package com.fileidea.yakusoku
 
+import android.R.attr
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.widget.EditText
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.fileidea.myapplication.RegisterForm
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+
 
 const val EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE"
 
@@ -25,7 +26,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun updateUI(user: FirebaseUser?) {
-        Log.i("updateUI", "Update..")
+        val isnullornot = user == null
+        Log.i("updateUI", "IS USER NOT NULL?.." )
+        if(isnullornot)
+        Log.i("updateUI", "IS NULL." )
+        else
+        Log.i("updateUI",  user?.email.toString())
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         val db = FirebaseFirestore.getInstance()
@@ -57,5 +63,12 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, RegisterForm::class.java).apply {
             }
             startActivity(intent)
+        startActivityForResult(intent, 1)
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+
 }
