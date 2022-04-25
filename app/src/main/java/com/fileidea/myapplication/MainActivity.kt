@@ -13,6 +13,7 @@ import com.fileidea.myapplication.RegisterForm
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import io.opencensus.stats.View
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.Exception
 
@@ -33,25 +34,11 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser: FirebaseUser? = mAuth.currentUser
+        Log.i("updateUI", "here you are logged in maybe ${currentUser?.email}" )
+
     }
 
 
-
-    fun updateUI(user: FirebaseUser?) {
-        val hasUser = user != null
-        Log.i("updateUI", "IS USER NOT NULL?.." )
-        Log.i("updateUI",  user?.email.toString())
-
-        if(hasUser)
-        {
-           // signout_button.isVisible = true
-            signup_button.isVisible = false
-        }
-        else {
-          //  signup_button.isVisible = true
-           // signout_button.isVisible = false
-        }
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         val db = FirebaseFirestore.getInstance()
         // Create a new user with a first and last name
@@ -76,12 +63,15 @@ class MainActivity : AppCompatActivity() {
         mFirebaseAuthLis = FirebaseAuth.AuthStateListener { firebaseAuth ->
             var user = firebaseAuth.currentUser
             if (user != null) {
-                Log.i("updateUI", "hej." )
+                Log.i("updateUI", "logged in" )
                 Toast.makeText(applicationContext,"You are logged in as ${user.email}",Toast.LENGTH_SHORT).show()
+                signup_button.visibility = android.view.View.GONE
+                signout_button.visibility = android.view.View.VISIBLE
             } else {
-                Log.i("updateUI", "hej2" )
-                updateUI(user)
-                // Logged out
+                Log.i("updateUI", "youre not logged in" )
+                signup_button.visibility = android.view.View.VISIBLE
+                signout_button.visibility = android.view.View.GONE
+
                 Toast.makeText(applicationContext,"You are not logged in",Toast.LENGTH_SHORT).show()
             }
         }
