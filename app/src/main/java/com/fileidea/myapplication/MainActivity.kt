@@ -7,10 +7,12 @@ import android.os.Bundle
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.fileidea.myapplication.RegisterForm
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 const val EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE"
@@ -26,12 +28,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun updateUI(user: FirebaseUser?) {
-        val isnullornot = user == null
+        val hasUser = user != null
         Log.i("updateUI", "IS USER NOT NULL?.." )
-        if(isnullornot)
-        Log.i("updateUI", "IS NULL." )
-        else
-        Log.i("updateUI",  user?.email.toString())
+        if(hasUser)
+        {
+           // signout_button.isVisible = true
+            signup_button.isVisible = false
+            Log.i("updateUI",  user?.email.toString())
+        }
+        else {
+          //  signup_button.isVisible = true
+           // signout_button.isVisible = false
+        }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         val db = FirebaseFirestore.getInstance()
@@ -63,12 +71,9 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, RegisterForm::class.java).apply {
             }
             startActivity(intent)
-        startActivityForResult(intent, 1)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
     }
-
-
 }

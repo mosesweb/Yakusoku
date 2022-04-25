@@ -40,7 +40,7 @@ class RegisterForm : AppCompatActivity() {
 
                 returnIntent.putExtra("result", user)
                // setResult(RESULT_OK, returnIntent)
-                //finish()
+                finish()
             }
             else {
                 val err = task.exception?.message;
