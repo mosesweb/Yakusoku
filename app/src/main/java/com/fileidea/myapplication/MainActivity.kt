@@ -1,21 +1,22 @@
 package com.fileidea.yakusoku
 
-import android.R.attr
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.ListView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
+import com.fileidea.myapplication.Promise
+import com.fileidea.myapplication.PromisesAdapter
 import com.fileidea.myapplication.RegisterForm
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import io.opencensus.stats.View
+import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.activity_main.*
-import java.lang.Exception
+import android.widget.ArrayAdapter
 
 
 const val EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE"
@@ -75,6 +76,33 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext,"You are not logged in",Toast.LENGTH_SHORT).show()
             }
         }
+        
+        // Promises
+        db.collection("promises").get()
+            .addOnCompleteListener(object : OnCompleteListener<QuerySnapshot?> {
+                override fun onComplete(task: Task<QuerySnapshot?>) {
+                    val mPromisesList: MutableList<String> = ArrayList()
+                    if (task.isSuccessful()) {
+
+                        for (document in task.getResult()!!) {
+                            val prom: Promise = document.toObject(Promise::class.java)
+                            var promname: String = prom.name;
+                            mPromisesList.add(promname)
+                        }
+
+
+                        val listadapter = ArrayAdapter(this@MainActivity,
+                            android.R.layout.simple_list_item_1,
+                            mPromisesList)
+                        promisesItemsListView.adapter = listadapter;
+
+                        Log.d("PromiseActivity", "Good getting documents: ${mPromisesList.size.toString()}")
+
+                    } else {
+                        Log.d("PromiseActivity", "Error getting documents: ", task.getException())
+                    }
+                }
+            })
 
 
         super.onCreate(savedInstanceState)
@@ -95,4 +123,5 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
     }
+
 }
